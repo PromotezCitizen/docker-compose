@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  database:
+    container_name: prod-db
+    image: mariadb
+    ports:
+      - "3307:3306"
+    env_file:
+      - ../env/database.env
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ../db/db_data:/var/lib/mysql
+      - ../db/db_config:/etc/mysql/conf.d
+    networks:
+      - rgback
+    
+  nginx:
+    container_name: prod-nginx
+    image: nginx
+    ports: 
+      - "80:80"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ../nginx/log/error.log:/var/log/nginx/error.log
+      - ../nginx/log/access.log:/var/log/nginx/access.log
+    networks:
+      - rgback
+
+# 이걸 필수로 넣어야 한다
+networks:
+  rgback:
+    driver: bridge
+    external: true
+    internal: true

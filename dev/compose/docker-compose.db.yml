@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  dev_database:
+    container_name: dev-db
+    image: mariadb
+    ports:
+      - "13306:3306"
+    env_file: # env는 dev나 prod나 공용으로 사용
+      - ../env/database.env
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ../db/db_data:/var/lib/mysql
+      - ../db/db_config:/etc/mysql/conf.d
+    networks:
+      - rgback_dev
+
+networks:
+  rgback_dev:
+    driver: bridge
+    external: true
+    internal: true

@@ -1,0 +1,8 @@
+*/db/db_data/*
+!*/db/db_data/.gitkeep
+
+*/db/db_config/*
+!*/db/db_config/.gitkeep
+
+**/*.log
+**/*.log.*

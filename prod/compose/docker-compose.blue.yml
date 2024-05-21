@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  server:
+    container_name: prod-blue
+    image: han990401/rgback
+    ports:
+      - "8000:3000"
+    env_file:
+      - ../env/server.env
+    networks:
+      - rgback
+    volumes:
+      - ../logs:/app/logs
+
+# 이걸 필수로 넣어야 한다
+networks:
+  rgback:
+    driver: bridge
+    external: true
+    internal: true
